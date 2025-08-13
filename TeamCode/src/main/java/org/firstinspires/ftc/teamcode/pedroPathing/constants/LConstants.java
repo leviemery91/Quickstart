@@ -3,6 +3,8 @@ package org.firstinspires.ftc.teamcode.pedroPathing.constants;
 import com.pedropathing.localization.*;
 import com.pedropathing.localization.constants.*;
 
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+
 public class LConstants {
     static {
         PinpointConstants.forwardY = -3.64;
