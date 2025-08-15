@@ -41,7 +41,7 @@ public class Movement extends OpMode {
 
         // These loop the movements of the robot
         follower.update();
-        //autonomousPathUpdate();
+        autonomousPathUpdate();
 
         // Feedback to Driver Hub
         telemetry.addData("path state", pathState);
@@ -57,9 +57,9 @@ public class Movement extends OpMode {
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
-//        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
-//        follower.setStartingPose(startPose);
-//        buildPaths();
+        follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
+        follower.setStartingPose(constants.START_POSE);
+        buildPaths();
     }
 
     /** This method is called continuously after Init while waiting for "play". **/
@@ -79,7 +79,7 @@ public class Movement extends OpMode {
     public void stop() {
     }
 
-    public void pathBuilder(){
+    public void buildPaths(){
 
         start = new Path(new BezierLine(new Point(constants.START_POSE), new Point(constants.POSE_ONE)));
         start.setLinearHeadingInterpolation(constants.START_POSE.getHeading(), constants.POSE_ONE.getHeading());
@@ -100,7 +100,73 @@ public class Movement extends OpMode {
                 .setLinearHeadingInterpolation(constants.POSE_THREE.getHeading(), constants.POSE_FOUR.getHeading())
                 .build();
 
+        end = new Path(new BezierLine(new Point(constants.POSE_FOUR), new Point(constants.END_POSE)));
+        end.setLinearHeadingInterpolation(constants.POSE_FOUR.getHeading(), constants.END_POSE.getHeading());
+    }
 
+    public void autonomousPathUpdate() {
+        switch (pathState) {
+            case 0:
+                follower.followPath(start);
+                setPathState(1);
+                break;
+            case 1:
+
+                /* You could check for
+                - Follower State: "if(!follower.isBusy() {}"
+                - Time: "if(pathTimer.getElapsedTimeSeconds() > 1) {}"
+                - Robot Position: "if(follower.getPose().getX() > 36) {}"
+                */
+
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Score Preload */
+
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                    follower.followPath(one,true);
+                    setPathState(2);
+                }
+                break;
+            case 2:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup1Pose's position */
+                if(!follower.isBusy()) {
+                    /* Grab Sample */
+
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
+                    follower.followPath(two,true);
+                    setPathState(3);
+                }
+                break;
+            case 3:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Score Sample */
+
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
+                    follower.followPath(three,true);
+                    setPathState(4);
+                }
+                break;
+            case 4:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Score Sample */
+
+                    /* Since this is a pathChain, we can have Pedro hold the end point while we are parked */
+                    follower.followPath(end,true);
+                    setPathState(5);
+                }
+                break;
+            case 5:
+                /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
+                if(!follower.isBusy()) {
+                    /* Level 1 Ascent */
+
+                    /* Set the state to a Case we won't use or define, so it just stops running an new paths */
+                    setPathState(-1);
+                }
+                break;
+        }
     }
 
 
