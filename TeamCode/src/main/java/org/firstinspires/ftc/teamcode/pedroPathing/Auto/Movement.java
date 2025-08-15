@@ -28,6 +28,8 @@ public class Movement extends OpMode {
     private Timer pathTimer, actionTimer, opmodeTimer;
     private int pathState;
 
+    private PathChain one, two, three;
+
     private Path start,end;
 
     public void setPathState(int pState) {
@@ -76,4 +78,33 @@ public class Movement extends OpMode {
     @Override
     public void stop() {
     }
+
+    public void pathBuilder(){
+
+        start = new Path(new BezierLine(new Point(constants.START_POSE), new Point(constants.POSE_ONE)));
+        start.setLinearHeadingInterpolation(constants.START_POSE.getHeading(), constants.POSE_ONE.getHeading());
+
+
+        one = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(constants.POSE_ONE), new Point(constants.POSE_TWO)))
+                .setLinearHeadingInterpolation(constants.POSE_ONE.getHeading(), constants.POSE_TWO.getHeading())
+                .build();
+
+        two = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(constants.POSE_TWO), new Point(constants.POSE_THREE)))
+                .setLinearHeadingInterpolation(constants.POSE_TWO.getHeading(), constants.POSE_THREE.getHeading())
+                .build();
+
+        three = follower.pathBuilder()
+                .addPath(new BezierLine(new Point(constants.POSE_THREE), new Point(constants.POSE_FOUR)))
+                .setLinearHeadingInterpolation(constants.POSE_THREE.getHeading(), constants.POSE_FOUR.getHeading())
+                .build();
+
+
+    }
+
+
+
+
+
 }
