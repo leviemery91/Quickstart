@@ -54,11 +54,23 @@ public class Movement extends OpMode {
     @Override
     public void init() {
         pathTimer = new Timer();
+        actionTimer = new Timer();
         opmodeTimer = new Timer();
         opmodeTimer.resetTimer();
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(constants.START_POSE);
+
+        telemetry.addData("x", follower.getPose().getX());
+        telemetry.addData("y", follower.getPose().getY());
+        telemetry.addData("heading", follower.getPose().getHeading());
+
+        telemetry.addData("startpose", constants.START_POSE.getHeading());
+
+
+        telemetry.update();
+
+
         buildPaths();
     }
 
@@ -109,6 +121,7 @@ public class Movement extends OpMode {
             case 0:
                 follower.followPath(start);
                 setPathState(1);
+               // actionTimer.resetTimer();
                 break;
             case 1:
 
@@ -119,32 +132,35 @@ public class Movement extends OpMode {
                 */
 
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
-                if(!follower.isBusy()) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10 ) {
                     /* Score Preload */
 
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
                     follower.followPath(one,true);
                     setPathState(2);
+                    pathTimer.resetTimer();
                 }
                 break;
             case 2:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup1Pose's position */
-                if(!follower.isBusy()) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 10 ) {
                     /* Grab Sample */
 
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
                     follower.followPath(two,true);
                     setPathState(3);
+                    pathTimer.resetTimer();
                 }
                 break;
             case 3:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
-                if(!follower.isBusy()) {
+                if(!follower.isBusy() && pathTimer.getElapsedTimeSeconds() > 5 ) {
                     /* Score Sample */
 
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
                     follower.followPath(three,true);
                     setPathState(4);
+                    pathTimer.resetTimer();
                 }
                 break;
             case 4:
