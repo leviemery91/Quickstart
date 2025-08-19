@@ -6,6 +6,7 @@ import com.pedropathing.util.CustomFilteredPIDFCoefficients;
 import com.pedropathing.util.CustomPIDFCoefficients;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+@Config
 public class FConstants {
     static {
         FollowerConstants.localizers = Localizers.PINPOINT;
@@ -33,7 +34,7 @@ public class FConstants {
         FollowerConstants.useSecondaryTranslationalPID = false;
         FollowerConstants.secondaryTranslationalPIDFCoefficients.setCoefficients(0.1,0,0.01,0); // Not being used, @see useSecondaryTranslationalPID
 
-        FollowerConstants.headingPIDFCoefficients.setCoefficients(0.8,0.0,0.015,0);//(0.75,0.0,0.01,0)
+        FollowerConstants.headingPIDFCoefficients.setCoefficients(-0.8,0.0,0.015,0);//(0.75,0.0,0.01,0)
         FollowerConstants.useSecondaryHeadingPID = true;
         FollowerConstants.secondaryHeadingPIDFCoefficients.setCoefficients(0.69,0,0.008,0); // Not being used, @see useSecondaryHeadingPID
 
@@ -51,5 +52,6 @@ public class FConstants {
         FollowerConstants.pathEndVelocityConstraint = 0.1;
         FollowerConstants.pathEndTranslationalConstraint = 0.1;
         FollowerConstants.pathEndHeadingConstraint = 0.007;
+
     }
 }
