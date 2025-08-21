@@ -1,14 +1,20 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.constants;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Localizers;
 import com.pedropathing.follower.FollowerConstants;
 import com.pedropathing.util.CustomFilteredPIDFCoefficients;
 import com.pedropathing.util.CustomPIDFCoefficients;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import org.firstinspires.ftc.teamcode.pedroPathing.Auto.Constants;
 
-@Config
 public class FConstants {
-    static {
+
+   Constants constants = new Constants();
+
+     static {
+
         FollowerConstants.localizers = Localizers.PINPOINT;
 
         FollowerConstants.leftFrontMotorName = "leftFront";
@@ -16,16 +22,18 @@ public class FConstants {
         FollowerConstants.rightFrontMotorName = "rightFront";
         FollowerConstants.rightRearMotorName = "rightBack";
 
-        FollowerConstants.leftFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
+        FollowerConstants.leftFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
         FollowerConstants.leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
         FollowerConstants.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
-        FollowerConstants.rightRearMotorDirection = DcMotorSimple.Direction.FORWARD;
+        FollowerConstants.rightRearMotorDirection = DcMotorSimple.Direction.REVERSE;
 
 
         FollowerConstants.mass = 9;
 
         FollowerConstants.xMovement = 91.8304832620753;
         FollowerConstants.yMovement = 77.4318996233015;
+
+        FollowerConstants.maxPower = constants.MOVEMENT_SPEED;
 
         FollowerConstants.forwardZeroPowerAcceleration = -59.00706329948933;
         FollowerConstants.lateralZeroPowerAcceleration = -95.74046809358087;
