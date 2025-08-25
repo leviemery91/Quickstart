@@ -11,9 +11,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Auto.Constants;
 
 public class FConstants {
 
-   Constants constants = new Constants();
 
-     static {
+   static {
 
         FollowerConstants.localizers = Localizers.PINPOINT;
 
@@ -23,17 +22,17 @@ public class FConstants {
         FollowerConstants.rightRearMotorName = "rightBack";
 
         FollowerConstants.leftFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
-        FollowerConstants.leftRearMotorDirection = DcMotorSimple.Direction.REVERSE;
-        FollowerConstants.rightFrontMotorDirection = DcMotorSimple.Direction.FORWARD;
+        FollowerConstants.leftRearMotorDirection = DcMotorSimple.Direction.FORWARD;
+        FollowerConstants.rightFrontMotorDirection = DcMotorSimple.Direction.REVERSE;
         FollowerConstants.rightRearMotorDirection = DcMotorSimple.Direction.REVERSE;
 
+        FollowerConstants.maxPower = .5;
 
         FollowerConstants.mass = 9;
 
         FollowerConstants.xMovement = 91.8304832620753;
         FollowerConstants.yMovement = 77.4318996233015;
 
-        FollowerConstants.maxPower = constants.MOVEMENT_SPEED;
 
         FollowerConstants.forwardZeroPowerAcceleration = -59.00706329948933;
         FollowerConstants.lateralZeroPowerAcceleration = -95.74046809358087;

@@ -202,6 +202,7 @@ public class ExampleBucketAuto extends OpMode {
                     follower.followPath(grabPickup3,true);
                     setPathState(6);
                 }
+
                 break;
             case 6:
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the pickup3Pose's position */

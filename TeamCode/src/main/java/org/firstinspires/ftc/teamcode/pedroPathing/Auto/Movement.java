@@ -3,10 +3,13 @@ package org.firstinspires.ftc.teamcode.pedroPathing.Auto;
 
 
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.pedroPathing.Auto.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
 import com.pedropathing.pathgen.BezierCurve;
@@ -22,6 +25,9 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 @Autonomous(name = "Movement Auto")
 public class Movement extends OpMode {
 
+    private Telemetry telemetryA;
+
+    int num = 0;
     private final Constants constants = new Constants();
     private Follower follower;
 
@@ -42,17 +48,23 @@ public class Movement extends OpMode {
         // These loop the movements of the robot
         follower.update();
         autonomousPathUpdate();
+        num++;
 
+        telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetryA.addData("voltage", num);
+        follower.telemetryDebug(telemetryA);
+        telemetryA.update();
         // Feedback to Driver Hub
-        telemetry.addData("path state", pathState);
-        telemetry.addData("x", follower.getPose().getX());
-        telemetry.addData("y", follower.getPose().getY());
-        telemetry.addData("heading", follower.getPose().getHeading());
-        telemetry.update();
+//        telemetry.addData("path state", pathState);
+//        telemetry.addData("x", follower.getPose().getX());
+//        telemetry.addData("y", follower.getPose().getY());
+//        telemetry.addData("heading", follower.getPose().getHeading());
+//        telemetry.update();
     }
 
     @Override
     public void init() {
+
         pathTimer = new Timer();
         actionTimer = new Timer();
         opmodeTimer = new Timer();
