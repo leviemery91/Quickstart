@@ -8,6 +8,8 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Auto.Constants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.constants.LConstants;
 
+import com.qualcomm.robotcore.hardware.VoltageSensor;
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.pedropathing.follower.Follower;
@@ -26,8 +28,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 public class Movement extends OpMode {
 
     private Telemetry telemetryA;
-
-    int num = 0;
+    private VoltageSensor batteryVolt;
     private final Constants constants = new Constants();
     private Follower follower;
 
@@ -44,14 +45,12 @@ public class Movement extends OpMode {
     }
 
     public void loop() {
-
+        double volts = batteryVolt.getVoltage();
         // These loop the movements of the robot
         follower.update();
         autonomousPathUpdate();
-        num++;
 
-        telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
-        telemetryA.addData("voltage", num);
+        telemetryA.addData("voltage", volts);
         follower.telemetryDebug(telemetryA);
         telemetryA.update();
         // Feedback to Driver Hub
@@ -65,6 +64,11 @@ public class Movement extends OpMode {
     @Override
     public void init() {
 
+        batteryVolt = hardwareMap.voltageSensor.iterator().next();
+
+        telemetryA = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
+        telemetryA.addLine("data");
+        telemetryA.update();
         pathTimer = new Timer();
         actionTimer = new Timer();
         opmodeTimer = new Timer();
