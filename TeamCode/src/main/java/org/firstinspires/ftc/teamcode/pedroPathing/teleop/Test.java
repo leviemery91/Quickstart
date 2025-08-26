@@ -5,6 +5,7 @@ import com.pedropathing.localization.GoBildaPinpointDriver;
 import com.pedropathing.localization.constants.PinpointConstants;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -38,6 +39,12 @@ public class Test extends LinearOpMode {
         frontRight = hardwareMap.get(DcMotorEx.class, "rightFront");
         backLeft = hardwareMap.get(DcMotorEx.class, "leftBack");
         backRight = hardwareMap.get(DcMotorEx.class, "rightBack");
+
+        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeft.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -99,8 +106,8 @@ public class Test extends LinearOpMode {
             boolean isSlowModeX = gamepad1.dpad_left || gamepad1.dpad_right;  // Slow mode for strafing (x-axis)
 
 // Speed factors for the axes              hiiiii
-            double speedFactorY = isSlowModeY ? 0.2 : .7;  // Apply slower speed in slow mode (0.2 for slow, 0.92 for normal)
-            double speedFactorX = isSlowModeX ? 0.5 : .7;  // Apply slower speed for strafing (0.5 for slow, 0.92 for normal)
+            double speedFactorY = isSlowModeY ? 0.2 : 1;  // Apply slower speed in slow mode (0.2 for slow, 0.92 for normal)
+            double speedFactorX = isSlowModeX ? 0.5 : 1;  // Apply slower speed for strafing (0.5 for slow, 0.92 for normal)
 
 // Handle D-Pad input for strafing (left, right, up, down) with fixed slow mode
             if (gamepad1.dpad_left || gamepad1.dpad_right || gamepad1.dpad_up || gamepad1.dpad_down) {
