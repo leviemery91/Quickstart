@@ -153,7 +153,7 @@ public class Test extends LinearOpMode {
             telemetryA.addData("Back Right Current", backRight.getCurrent(CurrentUnit.AMPS));
             telemetryA.addData("Front Left Current", frontLeft.getCurrent(CurrentUnit.AMPS));
             telemetryA.addData("Front Right Current", frontRight.getCurrent(CurrentUnit.AMPS));
-           // f.telemetryDebug(telemetryA);
+            //f.telemetryDebug(telemetryA);
             telemetry.update();
             telemetryA.update();
 

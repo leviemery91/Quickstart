@@ -51,14 +51,21 @@ public class Movement extends OpMode {
         autonomousPathUpdate();
 
         telemetryA.addData("voltage", volts);
-        follower.telemetryDebug(telemetryA);
+
+
+        telemetryA.addData("path state", pathState);
+        telemetryA.addData("x", follower.getPose().getX());
+        telemetryA.addData("y", follower.getPose().getY());
+        telemetryA.addData("heading", follower.getPose().getHeading());
+        telemetryA.addData("heading error", follower.getHeadingError());
+        telemetryA.addData("driving error", follower.getHeadingError());
+        telemetryA.addData("stuck", follower.isRobotStuck());
+        telemetryA.addData("turning", follower.isTurning());
+
+
+
         telemetryA.update();
-        // Feedback to Driver Hub
-//        telemetry.addData("path state", pathState);
-//        telemetry.addData("x", follower.getPose().getX());
-//        telemetry.addData("y", follower.getPose().getY());
-//        telemetry.addData("heading", follower.getPose().getHeading());
-//        telemetry.update();
+
     }
 
     @Override
@@ -77,14 +84,7 @@ public class Movement extends OpMode {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(constants.START_POSE);
 
-        telemetry.addData("x", follower.getPose().getX());
-        telemetry.addData("y", follower.getPose().getY());
-        telemetry.addData("heading", follower.getPose().getHeading());
 
-        telemetry.addData("startpose", constants.START_POSE.getHeading());
-
-
-        telemetry.update();
 
 
         buildPaths();
@@ -163,8 +163,11 @@ public class Movement extends OpMode {
                     /* Grab Sample */
 
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are scoring the sample */
-                    follower.followPath(two,true);
+                    //follower.followPath(two,true);
+                    follower.breakFollowing();
+                    follower.turnTo(Math.PI);
                     setPathState(3);
+                    pathTimer.resetTimer();
                     pathTimer.resetTimer();
                 }
                 break;
@@ -172,7 +175,7 @@ public class Movement extends OpMode {
                 /* This case checks the robot's position and will wait until the robot position is close (1 inch away) from the scorePose's position */
                 if(!follower.isBusy()) {
                     /* Score Sample */
-
+                    follower.resumePathFollowing();
                     /* Since this is a pathChain, we can have Pedro hold the end point while we are grabbing the sample */
                     follower.followPath(three,true);
                     setPathState(4);
