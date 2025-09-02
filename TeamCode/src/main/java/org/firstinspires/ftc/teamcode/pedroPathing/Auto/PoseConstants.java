@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.pedropathing.localization.Pose;
 
 @Config
-public class Constants {
+public class PoseConstants {
     public final Pose START_POSE = new Pose(0,0,Math.toRadians(0));
     public final Pose POSE_ONE = new Pose(12,0,Math.toRadians(0));
     public final Pose POSE_TWO = new Pose(0,0,Math.toRadians(0));
