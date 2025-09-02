@@ -83,6 +83,9 @@ public class Movement extends OpMode {
 
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
         follower.setStartingPose(constants.START_POSE);
+        follower.headingError = 0;
+        follower.driveError = 0;
+
 
 
 
